@@ -236,7 +236,7 @@ fbq('track', 'PageView');
     <div class="logo-wrap">
       <div class="logo-ring">
         <div class="logo-inner">
-          <img src="Arun.jpg" alt="Arun Max">
+          <img src="arun.jpg" alt="Arun Max">
         </div>
       </div>
       <div class="spark-badge"><i class="fas fa-arrow-trend-up"></i></div>
@@ -312,10 +312,11 @@ fbq('track', 'PageView');
    ================================================================ */
 const CONFIG = {
   TELEGRAM_LINK: "https://t.me/+6idVnlBchFFmOThl",
-  MIN_DWELL_MS: 1300,
-  REQUIRE_INTERACTION: true,
+  MIN_DWELL_MS: 400,
+  REQUIRE_INTERACTION: false,
   PREP_DELAY_MS: 200,
   BOT_CHECK_ENABLED: true,
+  REDIRECT_DELAY_MS: 250,
 };
 
 /* ---- 1) Engagement signals ---- */
@@ -351,7 +352,6 @@ fallbackLink.href = CONFIG.TELEGRAM_LINK;
 btn.classList.add('is-loading');
 
 setTimeout(() => {
-  if (isProbablyBot()) return;
   btn.disabled = false;
   btn.classList.remove('is-loading');
   prepNote.textContent = '';
@@ -387,7 +387,9 @@ function trackAndRedirect(event) {
     }
   }
 
-  window.location.href = CONFIG.TELEGRAM_LINK;
+  setTimeout(() => {
+    window.location.href = CONFIG.TELEGRAM_LINK;
+  }, CONFIG.REDIRECT_DELAY_MS);
   setTimeout(() => { fallbackLink.classList.add('show'); }, 1200);
 }
 
